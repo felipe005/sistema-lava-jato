@@ -1,0 +1,23 @@
+@model Servico
+@{
+    ViewData["Title"] = "Excluir serviço";
+}
+
+<h2>Excluir serviço</h2>
+
+<div class="alert alert-warning">
+    Tem certeza que deseja excluir este serviço?
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Nome</dt>
+    <dd class="col-sm-9">@Model.Nome</dd>
+    <dt class="col-sm-3">Preço</dt>
+    <dd class="col-sm-9">@Model.Preco.ToString("C")</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Excluir</button>
+    <a class="btn btn-secondary" asp-action="Index">Cancelar</a>
+</form>

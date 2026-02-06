@@ -1,0 +1,25 @@
+@model Agendamento
+@{
+    ViewData["Title"] = "Excluir agendamento";
+}
+
+<h2>Excluir agendamento</h2>
+
+<div class="alert alert-warning">
+    Tem certeza que deseja excluir este agendamento?
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Cliente</dt>
+    <dd class="col-sm-9">@Model.Cliente?.Nome</dd>
+    <dt class="col-sm-3">Veículo</dt>
+    <dd class="col-sm-9">@Model.Veiculo?.Placa</dd>
+    <dt class="col-sm-3">Serviço</dt>
+    <dd class="col-sm-9">@Model.Servico?.Nome</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Excluir</button>
+    <a class="btn btn-secondary" asp-action="Index">Cancelar</a>
+</form>

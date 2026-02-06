@@ -1,0 +1,48 @@
+@model Veiculo
+@{
+    ViewData["Title"] = "Editar veículo";
+}
+
+<h2>Editar veículo</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="ClienteId" class="form-label">Cliente</label>
+            <select asp-for="ClienteId" asp-items="ViewBag.ClienteId" class="form-select"></select>
+            <span asp-validation-for="ClienteId" class="text-danger"></span>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label asp-for="Placa" class="form-label"></label>
+            <input asp-for="Placa" class="form-control" />
+            <span asp-validation-for="Placa" class="text-danger"></span>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label asp-for="Ano" class="form-label"></label>
+            <input asp-for="Ano" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-3">
+            <label asp-for="Marca" class="form-label"></label>
+            <input asp-for="Marca" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-3">
+            <label asp-for="Modelo" class="form-label"></label>
+            <input asp-for="Modelo" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-3">
+            <label asp-for="Cor" class="form-label"></label>
+            <input asp-for="Cor" class="form-control" />
+        </div>
+        <div class="col-md-12 mb-3">
+            <label asp-for="Observacoes" class="form-label"></label>
+            <textarea asp-for="Observacoes" class="form-control"></textarea>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a class="btn btn-secondary" asp-action="Index">Voltar</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

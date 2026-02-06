@@ -1,0 +1,43 @@
+@model Agendamento
+@{
+    ViewData["Title"] = "Editar agendamento";
+}
+
+<h2>Editar agendamento</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <label asp-for="ClienteId" class="form-label">Cliente</label>
+            <select asp-for="ClienteId" asp-items="ViewBag.ClienteId" class="form-select"></select>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label asp-for="VeiculoId" class="form-label">Veículo</label>
+            <select asp-for="VeiculoId" asp-items="ViewBag.VeiculoId" class="form-select"></select>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label asp-for="ServicoId" class="form-label">Serviço</label>
+            <select asp-for="ServicoId" asp-items="ViewBag.ServicoId" class="form-select"></select>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label asp-for="DataAgendada" class="form-label"></label>
+            <input asp-for="DataAgendada" class="form-control" type="datetime-local" />
+            <span asp-validation-for="DataAgendada" class="text-danger"></span>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label asp-for="Status" class="form-label"></label>
+            <select asp-for="Status" asp-items="Html.GetEnumSelectList<StatusServico>()" class="form-select"></select>
+        </div>
+        <div class="col-md-12 mb-3">
+            <label asp-for="Observacoes" class="form-label"></label>
+            <textarea asp-for="Observacoes" class="form-control"></textarea>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a class="btn btn-secondary" asp-action="Index">Voltar</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

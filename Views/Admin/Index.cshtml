@@ -1,0 +1,62 @@
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "Admin";
+}
+
+<h2>Painel Administrativo</h2>
+
+<div class="row g-3">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Clientes</h6>
+                <p class="display-6">@Model.TotalClientes</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Veículos</h6>
+                <p class="display-6">@Model.TotalVeiculos</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Serviços</h6>
+                <p class="display-6">@Model.TotalServicos</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Agendamentos</h6>
+                <p class="display-6">@Model.TotalAgendamentos</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4">
+    <h5>Status dos serviços</h5>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Status</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.StatusCounts.OrderBy(x => x.Key))
+            {
+                <tr>
+                    <td>@item.Key</td>
+                    <td>@item.Value</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
