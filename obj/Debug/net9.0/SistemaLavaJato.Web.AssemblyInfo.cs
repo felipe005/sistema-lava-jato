@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SistemaLavaJato.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+10e6a315b08404f07d7aeb2b706fdb5623b759ae")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+483bd29413533d5d99442dce84bed94c3ecfaec0")]
 [assembly: System.Reflection.AssemblyProductAttribute("SistemaLavaJato.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SistemaLavaJato.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
