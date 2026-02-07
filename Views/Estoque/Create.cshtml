@@ -1,0 +1,38 @@
+@model ProdutoEstoque
+@{
+    ViewData["Title"] = "Novo produto";
+}
+
+<h2>Novo produto</h2>
+
+<form asp-action="Create" method="post">
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="Nome" class="form-label"></label>
+            <input asp-for="Nome" class="form-control" />
+            <span asp-validation-for="Nome" class="text-danger"></span>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label asp-for="Unidade" class="form-label"></label>
+            <input asp-for="Unidade" class="form-control" />
+        </div>
+        <div class="col-md-3 mb-3">
+            <label asp-for="CustoUnitario" class="form-label">Custo unitario</label>
+            <input asp-for="CustoUnitario" class="form-control" type="number" min="0" step="0.01" />
+        </div>
+        <div class="col-md-3 mb-3">
+            <label asp-for="QuantidadeAtual" class="form-label">Qtd atual</label>
+            <input asp-for="QuantidadeAtual" class="form-control" type="number" min="0" />
+        </div>
+        <div class="col-md-3 mb-3">
+            <label asp-for="QuantidadeMinima" class="form-label">Qtd minima</label>
+            <input asp-for="QuantidadeMinima" class="form-control" type="number" min="0" />
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a class="btn btn-secondary" asp-action="Index">Voltar</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

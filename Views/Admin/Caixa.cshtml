@@ -1,0 +1,94 @@
+@model CaixaReportViewModel
+@{
+    ViewData["Title"] = "Caixa";
+    var chartDataJson = ViewData["ChartData"] as string ?? "[]";
+}
+
+<h2>Relatorio de caixa</h2>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-3">
+        <label class="form-label">Inicio</label>
+        <input name="inicio" type="date" class="form-control" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Fim</label>
+        <input name="fim" type="date" class="form-control" value="@Model.EndDate.ToString("yyyy-MM-dd")" />
+    </div>
+    <div class="col-md-3 align-self-end">
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+    </div>
+</form>
+
+<div class="row g-3 mb-3">
+    <div class="col-md-3">
+        <div class="card"><div class="card-body"><h6>Receita</h6><div class="fs-5">@Model.TotalReceita.ToString("C")</div></div></div>
+    </div>
+    <div class="col-md-3">
+        <div class="card"><div class="card-body"><h6>Gastos</h6><div class="fs-5">@Model.TotalGastos.ToString("C")</div></div></div>
+    </div>
+    <div class="col-md-3">
+        <div class="card"><div class="card-body"><h6>Salarios</h6><div class="fs-5">@Model.TotalSalarios.ToString("C")</div></div></div>
+    </div>
+    <div class="col-md-3">
+        <div class="card"><div class="card-body"><h6>Lucro</h6><div class="fs-5">@Model.TotalLucro.ToString("C")</div></div></div>
+    </div>
+</div>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <h6 class="card-title">Grafico do periodo</h6>
+        <canvas id="caixaChart" height="120"></canvas>
+    </div>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Data</th>
+            <th>Receita</th>
+            <th>Gastos</th>
+            <th>Salarios</th>
+            <th>Lucro</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var d in Model.Dias)
+        {
+            <tr>
+                <td>@d.Data.ToString("dd/MM/yyyy")</td>
+                <td>@d.Receita.ToString("C")</td>
+                <td>@d.Gastos.ToString("C")</td>
+                <td>@d.Salarios.ToString("C")</td>
+                <td>@d.Lucro.ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        (function () {
+            const data = @Html.Raw(chartDataJson);
+            const labels = data.map(x => x.Data);
+            const receita = data.map(x => x.Receita);
+            const gastos = data.map(x => x.Gastos);
+            const lucro = data.map(x => x.Lucro);
+            const ctx = document.getElementById('caixaChart');
+            if (!ctx) return;
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        { label: 'Receita', data: receita, backgroundColor: '#4E79A7' },
+                        { label: 'Gastos', data: gastos, backgroundColor: '#E15759' },
+                        { label: 'Lucro', data: lucro, backgroundColor: '#59A14F' }
+                    ]
+                },
+                options: { responsive: true, scales: { y: { beginAtZero: true } } }
+            });
+        })();
+    </script>
+}

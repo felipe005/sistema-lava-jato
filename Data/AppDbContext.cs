@@ -15,6 +15,11 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Veiculo> Veiculos => Set<Veiculo>();
     public DbSet<Servico> Servicos => Set<Servico>();
     public DbSet<Agendamento> Agendamentos => Set<Agendamento>();
+    public DbSet<GastoProduto> GastosProdutos => Set<GastoProduto>();
+    public DbSet<Funcionario> Funcionarios => Set<Funcionario>();
+    public DbSet<ProdutoEstoque> ProdutosEstoque => Set<ProdutoEstoque>();
+    public DbSet<MovimentacaoEstoque> MovimentacoesEstoque => Set<MovimentacaoEstoque>();
+    public DbSet<Notificacao> Notificacoes => Set<Notificacao>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -45,5 +50,26 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
             .WithMany(s => s.Agendamentos)
             .HasForeignKey(a => a.ServicoId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<GastoProduto>()
+            .HasIndex(g => g.Produto);
+
+        builder.Entity<Funcionario>()
+            .HasIndex(f => f.Nome);
+
+        builder.Entity<Agendamento>()
+            .HasOne(a => a.Funcionario)
+            .WithMany(f => f.Agendamentos)
+            .HasForeignKey(a => a.FuncionarioId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        builder.Entity<ProdutoEstoque>()
+            .HasIndex(p => p.Nome);
+
+        builder.Entity<MovimentacaoEstoque>()
+            .HasOne(m => m.ProdutoEstoque)
+            .WithMany(p => p.Movimentacoes)
+            .HasForeignKey(m => m.ProdutoEstoqueId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

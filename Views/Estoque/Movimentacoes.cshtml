@@ -1,0 +1,35 @@
+@model IEnumerable<MovimentacaoEstoque>
+@{
+    ViewData["Title"] = "Movimentacoes";
+    var produto = ViewData["Produto"] as ProdutoEstoque;
+}
+
+<h2>Movimentacoes</h2>
+@if (produto is not null)
+{
+    <div class="mb-3"><strong>@produto.Nome</strong></div>
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Data</th>
+            <th>Tipo</th>
+            <th>Quantidade</th>
+            <th>Observacoes</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Data.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@item.Tipo</td>
+                <td>@item.Quantidade</td>
+                <td>@item.Observacoes</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a class="btn btn-secondary" asp-action="Index">Voltar</a>

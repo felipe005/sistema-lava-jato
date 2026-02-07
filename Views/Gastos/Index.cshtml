@@ -1,0 +1,82 @@
+@model IEnumerable<GastoProduto>
+@{
+    ViewData["Title"] = "Gastos";
+    var chartDataJson = ViewData["GastosPorProduto"] as string ?? "[]";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Gastos com produtos</h2>
+    <a class="btn btn-primary" asp-action="Create">Novo gasto</a>
+</div>
+
+<div class="row g-3">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Gastos por produto</h6>
+                <canvas id="gastosPizza" height="240"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table table-striped mt-4">
+    <thead>
+        <tr>
+            <th>Data</th>
+            <th>Produto</th>
+            <th>Quantidade</th>
+            <th>Valor unitário</th>
+            <th>Total</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Data.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@item.Produto</td>
+                <td>@item.Quantidade</td>
+                <td>@item.ValorUnitario.ToString("C")</td>
+                <td>@item.Total.ToString("C")</td>
+                <td class="text-end">
+                    <a class="btn btn-sm btn-outline-secondary" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                    <a class="btn btn-sm btn-outline-primary" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                    <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        (function () {
+            const data = @Html.Raw(chartDataJson);
+            const labels = data.map(x => x.Produto);
+            const totals = data.map(x => x.Total);
+            const ctx = document.getElementById('gastosPizza');
+            if (!ctx) return;
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: totals,
+                        backgroundColor: [
+                            '#2E86AB', '#F6C85F', '#6F4E7C', '#4E79A7', '#59A14F', '#E15759', '#9C755F'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+        })();
+    </script>
+}

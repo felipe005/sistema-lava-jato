@@ -16,13 +16,26 @@ public class ClientesController : Controller
         _context = context;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string? q = null)
     {
-        var clientes = await _context.Clientes
+        var query = _context.Clientes.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(q))
+        {
+            var termo = q.Trim();
+            query = query.Where(c =>
+                c.Nome.Contains(termo) ||
+                (c.Cpf != null && c.Cpf.Contains(termo)) ||
+                (c.Telefone != null && c.Telefone.Contains(termo)) ||
+                (c.Email != null && c.Email.Contains(termo)));
+        }
+
+        var clientes = await query
             .AsNoTracking()
             .OrderBy(c => c.Nome)
             .ToListAsync();
 
+        ViewData["Search"] = q;
         return View(clientes);
     }
 
@@ -32,6 +45,10 @@ public class ClientesController : Controller
 
         var cliente = await _context.Clientes
             .Include(c => c.Veiculos)
+            .Include(c => c.Agendamentos)
+                .ThenInclude(a => a.Servico)
+            .Include(c => c.Agendamentos)
+                .ThenInclude(a => a.Veiculo)
             .AsNoTracking()
             .FirstOrDefaultAsync(m => m.Id == id);
 
@@ -117,6 +134,14 @@ public class ClientesController : Controller
     {
         var cliente = await _context.Clientes.FindAsync(id);
         if (cliente is null) return RedirectToAction(nameof(Index));
+
+        var hasAgendamentos = await _context.Agendamentos.AnyAsync(a => a.ClienteId == id);
+        var hasVeiculos = await _context.Veiculos.AnyAsync(v => v.ClienteId == id);
+        if (hasAgendamentos || hasVeiculos)
+        {
+            ModelState.AddModelError(string.Empty, "Não é possível excluir este cliente porque existem veículos ou agendamentos vinculados.");
+            return View(cliente);
+        }
 
         _context.Clientes.Remove(cliente);
         await _context.SaveChangesAsync();

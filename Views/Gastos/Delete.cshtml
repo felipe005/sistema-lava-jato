@@ -1,0 +1,33 @@
+@model GastoProduto
+@{
+    ViewData["Title"] = "Excluir gasto";
+}
+
+<h2>Excluir gasto</h2>
+
+<div class="alert alert-warning">
+    Tem certeza que deseja excluir este gasto?
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Produto</dt>
+    <dd class="col-sm-9">@Model.Produto</dd>
+
+    <dt class="col-sm-3">Quantidade</dt>
+    <dd class="col-sm-9">@Model.Quantidade</dd>
+
+    <dt class="col-sm-3">Valor unitário</dt>
+    <dd class="col-sm-9">@Model.ValorUnitario.ToString("C")</dd>
+
+    <dt class="col-sm-3">Total</dt>
+    <dd class="col-sm-9">@Model.Total.ToString("C")</dd>
+
+    <dt class="col-sm-3">Data</dt>
+    <dd class="col-sm-9">@Model.Data.ToString("dd/MM/yyyy HH:mm")</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Excluir</button>
+    <a class="btn btn-secondary" asp-action="Index">Voltar</a>
+</form>

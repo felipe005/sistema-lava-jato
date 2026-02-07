@@ -21,22 +21,31 @@
                 <div class="collapse navbar-collapse" id="navbarMain">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="Index">Início</a>
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">Inicio</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Clientes" asp-action="Index">Clientes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Veiculos" asp-action="Index">Veículos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Servicos" asp-action="Index">Serviços</a>
+                            <a class="nav-link" asp-controller="Veiculos" asp-action="Index">Veiculos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Agendamentos" asp-action="Index">Agendamentos</a>
                         </li>
                         @if (User.IsInRole("Admin"))
                         {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Servicos" asp-action="Index">Servicos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Gastos" asp-action="Index">Gastos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Estoque" asp-action="Index">Estoque</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Funcionarios" asp-action="Index">Funcionarios</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Admin" asp-action="Index">Admin</a>
                             </li>

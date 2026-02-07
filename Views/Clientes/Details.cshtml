@@ -1,6 +1,7 @@
 @model Cliente
 @{
     ViewData["Title"] = "Detalhes do cliente";
+    var agendamentos = Model.Agendamentos.OrderByDescending(a => a.DataAgendada).ToList();
 }
 
 <h2>Detalhes do cliente</h2>
@@ -20,13 +21,45 @@
 
 @if (Model.Veiculos.Any())
 {
-    <h5>Veículos</h5>
+    <h5>Veiculos</h5>
     <ul class="list-group mb-3">
         @foreach (var v in Model.Veiculos)
         {
             <li class="list-group-item">@v.Placa - @v.Modelo</li>
         }
     </ul>
+}
+
+<h5>Historico de servicos</h5>
+@if (!agendamentos.Any())
+{
+    <div class="text-muted">Sem agendamentos.</div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Veiculo</th>
+                <th>Servico</th>
+                <th>Status</th>
+                <th>Desconto</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var a in agendamentos)
+            {
+                <tr>
+                    <td>@a.DataAgendada.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>@a.Veiculo?.Placa</td>
+                    <td>@a.Servico?.Nome</td>
+                    <td>@a.Status</td>
+                    <td>@(a.TeveDesconto ? a.ValorDesconto.ToString("C") : "-")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 
 <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>

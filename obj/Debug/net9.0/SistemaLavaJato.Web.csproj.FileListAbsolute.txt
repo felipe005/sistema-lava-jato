@@ -198,3 +198,4 @@ C:\Users\felip\OneDrive\Área de Trabalho\sistema lava-jato\SistemaLavaJato.Web\
 C:\Users\felip\OneDrive\Área de Trabalho\sistema lava-jato\SistemaLavaJato.Web\obj\Debug\net9.0\SistemaLavaJato.Web.pdb
 C:\Users\felip\OneDrive\Área de Trabalho\sistema lava-jato\SistemaLavaJato.Web\obj\Debug\net9.0\SistemaLavaJato.Web.genruntimeconfig.cache
 C:\Users\felip\OneDrive\Área de Trabalho\sistema lava-jato\SistemaLavaJato.Web\obj\Debug\net9.0\ref\SistemaLavaJato.Web.dll
+C:\Users\felip\OneDrive\Área de Trabalho\sistema lava-jato\SistemaLavaJato.Web\obj\Debug\net9.0\SistemaLavaJato.Web.sourcelink.json

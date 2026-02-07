@@ -1,0 +1,42 @@
+@model ComissaoReportViewModel
+@{
+    ViewData["Title"] = "Comissoes";
+}
+
+<h2>Comissoes por funcionario</h2>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-3">
+        <label class="form-label">Inicio</label>
+        <input name="inicio" type="date" class="form-control" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Fim</label>
+        <input name="fim" type="date" class="form-control" value="@Model.EndDate.ToString("yyyy-MM-dd")" />
+    </div>
+    <div class="col-md-3 align-self-end">
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Funcionario</th>
+            <th>% Comissao</th>
+            <th>Base</th>
+            <th>Comissao</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Itens)
+        {
+            <tr>
+                <td>@item.Nome</td>
+                <td>@item.Percentual.ToString("F2")%</td>
+                <td>@item.TotalBase.ToString("C")</td>
+                <td>@item.TotalComissao.ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>

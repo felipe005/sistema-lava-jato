@@ -6,7 +6,7 @@ using SistemaLavaJato.Web.Models.Entities;
 
 namespace SistemaLavaJato.Web.Controllers;
 
-[Authorize]
+[Authorize(Roles = "Admin")]
 public class ServicosController : Controller
 {
     private readonly AppDbContext _context;
@@ -116,6 +116,13 @@ public class ServicosController : Controller
     {
         var servico = await _context.Servicos.FindAsync(id);
         if (servico is null) return RedirectToAction(nameof(Index));
+
+        var hasAgendamentos = await _context.Agendamentos.AnyAsync(a => a.ServicoId == id);
+        if (hasAgendamentos)
+        {
+            ModelState.AddModelError(string.Empty, "Não é possível excluir este serviço porque existem agendamentos vinculados.");
+            return View(servico);
+        }
 
         _context.Servicos.Remove(servico);
         await _context.SaveChangesAsync();

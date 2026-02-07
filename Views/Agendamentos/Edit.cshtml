@@ -13,12 +13,18 @@
             <select asp-for="ClienteId" asp-items="ViewBag.ClienteId" class="form-select"></select>
         </div>
         <div class="col-md-4 mb-3">
-            <label asp-for="VeiculoId" class="form-label">Veículo</label>
+            <label asp-for="VeiculoId" class="form-label">Veiculo</label>
             <select asp-for="VeiculoId" asp-items="ViewBag.VeiculoId" class="form-select"></select>
         </div>
         <div class="col-md-4 mb-3">
-            <label asp-for="ServicoId" class="form-label">Serviço</label>
+            <label asp-for="ServicoId" class="form-label">Servico</label>
             <select asp-for="ServicoId" asp-items="ViewBag.ServicoId" class="form-select"></select>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label asp-for="FuncionarioId" class="form-label">Funcionario</label>
+            <select asp-for="FuncionarioId" asp-items="ViewBag.FuncionarioId" class="form-select">
+                <option value="">Selecione</option>
+            </select>
         </div>
         <div class="col-md-4 mb-3">
             <label asp-for="DataAgendada" class="form-label"></label>
@@ -26,8 +32,23 @@
             <span asp-validation-for="DataAgendada" class="text-danger"></span>
         </div>
         <div class="col-md-4 mb-3">
+            <label asp-for="TempoEstimadoMinutos" class="form-label">Tempo estimado (min)</label>
+            <input asp-for="TempoEstimadoMinutos" class="form-control" type="number" min="0" />
+        </div>
+        <div class="col-md-4 mb-3">
             <label asp-for="Status" class="form-label"></label>
             <select asp-for="Status" asp-items="Html.GetEnumSelectList<StatusServico>()" class="form-select"></select>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label asp-for="TeveDesconto" class="form-label">Teve desconto?</label>
+            <select asp-for="TeveDesconto" class="form-select">
+                <option value="false">Nao</option>
+                <option value="true">Sim</option>
+            </select>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label asp-for="ValorDesconto" class="form-label">Valor do desconto</label>
+            <input asp-for="ValorDesconto" class="form-control" type="number" min="0" step="0.01" />
         </div>
         <div class="col-md-12 mb-3">
             <label asp-for="Observacoes" class="form-label"></label>

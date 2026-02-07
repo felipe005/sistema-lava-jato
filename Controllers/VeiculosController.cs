@@ -125,6 +125,17 @@ public class VeiculosController : Controller
         var veiculo = await _context.Veiculos.FindAsync(id);
         if (veiculo is null) return RedirectToAction(nameof(Index));
 
+        var hasAgendamentos = await _context.Agendamentos.AnyAsync(a => a.VeiculoId == id);
+        if (hasAgendamentos)
+        {
+            ModelState.AddModelError(string.Empty, "Não é possível excluir este veículo porque existem agendamentos vinculados.");
+            var veiculoComCliente = await _context.Veiculos
+                .Include(v => v.Cliente)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(v => v.Id == id);
+            return View(veiculoComCliente ?? veiculo);
+        }
+
         _context.Veiculos.Remove(veiculo);
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));

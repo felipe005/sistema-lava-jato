@@ -7,41 +7,66 @@
 
 <div class="row g-3">
     <div class="col-md-3">
-        <div class="card">
-            <div class="card-body">
-                <h6 class="card-title">Clientes</h6>
-                <p class="display-6">@Model.TotalClientes</p>
-            </div>
-        </div>
+        <div class="card"><div class="card-body"><h6 class="card-title">Clientes</h6><p class="display-6">@Model.TotalClientes</p></div></div>
     </div>
     <div class="col-md-3">
-        <div class="card">
-            <div class="card-body">
-                <h6 class="card-title">Veículos</h6>
-                <p class="display-6">@Model.TotalVeiculos</p>
-            </div>
-        </div>
+        <div class="card"><div class="card-body"><h6 class="card-title">Veiculos</h6><p class="display-6">@Model.TotalVeiculos</p></div></div>
     </div>
     <div class="col-md-3">
-        <div class="card">
-            <div class="card-body">
-                <h6 class="card-title">Serviços</h6>
-                <p class="display-6">@Model.TotalServicos</p>
-            </div>
-        </div>
+        <div class="card"><div class="card-body"><h6 class="card-title">Servicos</h6><p class="display-6">@Model.TotalServicos</p></div></div>
     </div>
     <div class="col-md-3">
-        <div class="card">
-            <div class="card-body">
-                <h6 class="card-title">Agendamentos</h6>
-                <p class="display-6">@Model.TotalAgendamentos</p>
-            </div>
-        </div>
+        <div class="card"><div class="card-body"><h6 class="card-title">Agendamentos</h6><p class="display-6">@Model.TotalAgendamentos</p></div></div>
     </div>
 </div>
 
+<div class="mt-3 d-flex gap-2">
+    <a class="btn btn-outline-primary" asp-action="Caixa">Relatorio de caixa</a>
+    <a class="btn btn-outline-primary" asp-action="Comissoes">Comissoes</a>
+    <a class="btn btn-outline-primary" asp-action="ExportarCaixaCsv">Baixar caixa (Excel/CSV)</a>
+    <a class="btn btn-outline-secondary" asp-action="ExportarCaixaPdf">Baixar caixa (PDF)</a>
+</div>
+
 <div class="mt-4">
-    <h5>Status dos serviços</h5>
+    <h5>Resumo financeiro</h5>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Periodo</th>
+                <th>Receita</th>
+                <th>Gastos</th>
+                <th>Salarios (mes)</th>
+                <th>Lucro</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Dia</td>
+                <td>@Model.ReceitaDia.ToString("C")</td>
+                <td>@Model.GastosDia.ToString("C")</td>
+                <td>-</td>
+                <td>@Model.LucroDia.ToString("C")</td>
+            </tr>
+            <tr>
+                <td>Semana</td>
+                <td>@Model.ReceitaSemana.ToString("C")</td>
+                <td>@Model.GastosSemana.ToString("C")</td>
+                <td>-</td>
+                <td>@Model.LucroSemana.ToString("C")</td>
+            </tr>
+            <tr>
+                <td>Mes</td>
+                <td>@Model.ReceitaMes.ToString("C")</td>
+                <td>@Model.GastosMes.ToString("C")</td>
+                <td>@Model.SalariosMes.ToString("C")</td>
+                <td>@Model.LucroMes.ToString("C")</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="mt-4">
+    <h5>Status dos servicos</h5>
     <table class="table table-striped">
         <thead>
             <tr>

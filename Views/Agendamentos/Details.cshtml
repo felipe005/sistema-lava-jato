@@ -8,15 +8,25 @@
 <dl class="row">
     <dt class="col-sm-3">Cliente</dt>
     <dd class="col-sm-9">@Model.Cliente?.Nome</dd>
-    <dt class="col-sm-3">Veículo</dt>
+    <dt class="col-sm-3">Veiculo</dt>
     <dd class="col-sm-9">@Model.Veiculo?.Placa</dd>
-    <dt class="col-sm-3">Serviço</dt>
+    <dt class="col-sm-3">Servico</dt>
     <dd class="col-sm-9">@Model.Servico?.Nome</dd>
+    <dt class="col-sm-3">Funcionario</dt>
+    <dd class="col-sm-9">@Model.Funcionario?.Nome</dd>
     <dt class="col-sm-3">Data</dt>
     <dd class="col-sm-9">@Model.DataAgendada.ToString("dd/MM/yyyy HH:mm")</dd>
+    <dt class="col-sm-3">Inicio do servico</dt>
+    <dd class="col-sm-9">@(Model.InicioServico.HasValue ? Model.InicioServico.Value.ToLocalTime().ToString("dd/MM/yyyy HH:mm") : "-")</dd>
+    <dt class="col-sm-3">Tempo estimado (min)</dt>
+    <dd class="col-sm-9">@(Model.TempoEstimadoMinutos.HasValue ? Model.TempoEstimadoMinutos.Value.ToString() : "-")</dd>
     <dt class="col-sm-3">Status</dt>
     <dd class="col-sm-9">@Model.Status</dd>
-    <dt class="col-sm-3">Observações</dt>
+    <dt class="col-sm-3">Teve desconto?</dt>
+    <dd class="col-sm-9">@(Model.TeveDesconto ? "Sim" : "Nao")</dd>
+    <dt class="col-sm-3">Valor do desconto</dt>
+    <dd class="col-sm-9">@Model.ValorDesconto.ToString("C")</dd>
+    <dt class="col-sm-3">Observacoes</dt>
     <dd class="col-sm-9">@Model.Observacoes</dd>
 </dl>
 

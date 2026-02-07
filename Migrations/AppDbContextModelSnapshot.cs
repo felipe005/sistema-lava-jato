@@ -171,6 +171,12 @@ namespace SistemaLavaJato.Web.Migrations
                     b.Property<DateTime>("DataAgendada")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int?>("FuncionarioId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("InicioServico")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("Observacoes")
                         .HasMaxLength(300)
                         .HasColumnType("character varying(300)");
@@ -181,12 +187,23 @@ namespace SistemaLavaJato.Web.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("TempoEstimadoMinutos")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("TeveDesconto")
+                        .HasColumnType("boolean");
+
+                    b.Property<decimal>("ValorDesconto")
+                        .HasColumnType("decimal(10,2)");
+
                     b.Property<int>("VeiculoId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClienteId");
+
+                    b.HasIndex("FuncionarioId");
 
                     b.HasIndex("ServicoId");
 
@@ -296,6 +313,178 @@ namespace SistemaLavaJato.Web.Migrations
                         .IsUnique();
 
                     b.ToTable("Clientes");
+                });
+
+            modelBuilder.Entity("SistemaLavaJato.Web.Models.Entities.Funcionario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)");
+
+                    b.Property<decimal>("PercentualComissao")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<decimal>("SalarioMensal")
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<string>("Telefone")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("Nome");
+
+                    b.ToTable("Funcionarios");
+                });
+
+            modelBuilder.Entity("SistemaLavaJato.Web.Models.Entities.GastoProduto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Observacoes")
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<string>("Produto")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)");
+
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("ValorUnitario")
+                        .HasColumnType("decimal(10,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Produto");
+
+                    b.ToTable("GastosProdutos");
+                });
+
+            modelBuilder.Entity("SistemaLavaJato.Web.Models.Entities.MovimentacaoEstoque", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Observacoes")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<int>("ProdutoEstoqueId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Tipo")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProdutoEstoqueId");
+
+                    b.ToTable("MovimentacoesEstoque");
+                });
+
+            modelBuilder.Entity("SistemaLavaJato.Web.Models.Entities.Notificacao", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AgendamentoId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Canal")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<int?>("ClienteId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("EnviadoEm")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Mensagem")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AgendamentoId");
+
+                    b.HasIndex("ClienteId");
+
+                    b.ToTable("Notificacoes");
+                });
+
+            modelBuilder.Entity("SistemaLavaJato.Web.Models.Entities.ProdutoEstoque", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("CustoUnitario")
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)");
+
+                    b.Property<int>("QuantidadeAtual")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("QuantidadeMinima")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Unidade")
+                        .HasMaxLength(60)
+                        .HasColumnType("character varying(60)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Nome");
+
+                    b.ToTable("ProdutosEstoque");
                 });
 
             modelBuilder.Entity("SistemaLavaJato.Web.Models.Entities.Servico", b =>
@@ -427,6 +616,11 @@ namespace SistemaLavaJato.Web.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("SistemaLavaJato.Web.Models.Entities.Funcionario", "Funcionario")
+                        .WithMany("Agendamentos")
+                        .HasForeignKey("FuncionarioId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("SistemaLavaJato.Web.Models.Entities.Servico", "Servico")
                         .WithMany("Agendamentos")
                         .HasForeignKey("ServicoId")
@@ -441,9 +635,46 @@ namespace SistemaLavaJato.Web.Migrations
 
                     b.Navigation("Cliente");
 
+                    b.Navigation("Funcionario");
+
                     b.Navigation("Servico");
 
                     b.Navigation("Veiculo");
+                });
+
+            modelBuilder.Entity("SistemaLavaJato.Web.Models.Entities.Funcionario", b =>
+                {
+                    b.HasOne("SistemaLavaJato.Web.Models.Entities.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("SistemaLavaJato.Web.Models.Entities.MovimentacaoEstoque", b =>
+                {
+                    b.HasOne("SistemaLavaJato.Web.Models.Entities.ProdutoEstoque", "ProdutoEstoque")
+                        .WithMany("Movimentacoes")
+                        .HasForeignKey("ProdutoEstoqueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProdutoEstoque");
+                });
+
+            modelBuilder.Entity("SistemaLavaJato.Web.Models.Entities.Notificacao", b =>
+                {
+                    b.HasOne("SistemaLavaJato.Web.Models.Entities.Agendamento", "Agendamento")
+                        .WithMany()
+                        .HasForeignKey("AgendamentoId");
+
+                    b.HasOne("SistemaLavaJato.Web.Models.Entities.Cliente", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("ClienteId");
+
+                    b.Navigation("Agendamento");
+
+                    b.Navigation("Cliente");
                 });
 
             modelBuilder.Entity("SistemaLavaJato.Web.Models.Entities.Veiculo", b =>
@@ -462,6 +693,16 @@ namespace SistemaLavaJato.Web.Migrations
                     b.Navigation("Agendamentos");
 
                     b.Navigation("Veiculos");
+                });
+
+            modelBuilder.Entity("SistemaLavaJato.Web.Models.Entities.Funcionario", b =>
+                {
+                    b.Navigation("Agendamentos");
+                });
+
+            modelBuilder.Entity("SistemaLavaJato.Web.Models.Entities.ProdutoEstoque", b =>
+                {
+                    b.Navigation("Movimentacoes");
                 });
 
             modelBuilder.Entity("SistemaLavaJato.Web.Models.Entities.Servico", b =>
